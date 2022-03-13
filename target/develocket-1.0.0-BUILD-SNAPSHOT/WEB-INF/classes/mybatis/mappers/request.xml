@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mapper.request">
+ 
+ 	<!-- 새로운 견적 입력 -->
+  	<insert id="insertNewRequest" parameterType="requestVO">
+  		<selectKey keyProperty="request_cd" resultType="String" order="BEFORE">
+			SELECT NVL(MAX(to_number(REQUEST_CD)), 0) + 1 FROM T_REQUEST
+		</selectKey>
+  		<![CDATA[
+			INSERT INTO T_REQUEST (REQUEST_CD, SURVEY_CD)
+				VALUES(#{request_cd}, #{survey_cd})
+		]]>
+  	</insert>
+  	
+  	
+  	<!-- 받은 견적에 띄울 모든 견적서 출력 -->
+  	<select id="selectAllEstimate" resultType="receiveEstimateVO" parameterType="String">
+  		<![CDATA[
+			SELECT tc2.* , tsf.STAR_FIELD_CD , tsf.PROFILE_IMG , tsi.STAR_CD , tsi.STAR_NICKNAME , tc.CONTRACT_CD , tc.STATUS_INFO , tc.VIEW_CHECK 
+			FROM T_CONTRACT tc , T_STAR_FIELD tsf , T_ROCKET_INFO tri  , T_CATEGORY tc2 , T_STAR_INFO tsi  
+			WHERE tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.ROCKET_CD = tri.ROCKET_CD 
+			AND tsf.CATE_CD = tc2.CATE_CD 
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.ROCKET_CD = #{rocket_cd}
+			AND tc.HIDE_CHECK NOT LIKE '%a%'
+			ORDER BY TO_NUMBER(tc.CONTRACT_CD) DESC
+		]]>
+  	</select>
+  	
+  	<!-- 받은 견적 팝업창에 띄울 정보 출력 -->
+  	<select id="selectOneEstimate" resultType="estimateVO" parameterType="String">
+  		<![CDATA[
+			SELECT tc2.* , tsf.STAR_FIELD_CD , tsf.PROFILE_IMG , tsi2.STAR_CD , tsi2.STAR_NICKNAME , tsi.*, tr.REQUEST_CD , tr.PRICE , tr.ESTIMATE_COMMENTS , tc.STATUS_INFO
+			FROM T_CONTRACT tc , T_SURVEY_INFO tsi , T_REQUEST tr , T_STAR_FIELD tsf ,T_CATEGORY tc2 , T_STAR_INFO tsi2 
+			WHERE tc.CONTRACT_CD = tsi.CONTRACT_CD 
+			AND tsi.SURVEY_CD = tr.SURVEY_CD 
+			AND tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tsf.CATE_CD = tc2.CATE_CD 
+			AND tsf.STAR_CD = tsi2.STAR_CD 
+			AND tc.CONTRACT_CD = #{contract_cd}
+		]]>
+  	</select>
+  	
+  	
+  	
+  	<!-- 받은 요청에 띄울 모든 견적서 출력 -->
+  	<select id="selectAllRequest" resultType="receiveRequestVO" parameterType="String">
+  		<![CDATA[
+  			SELECT tc2.* , tri.ROCKET_CD , tri.PROFILE_IMG , tri.NAME , tc.CONTRACT_CD , tc.STATUS_INFO , tc.VIEW_CHECK 
+			FROM T_SURVEY_INFO tsi , T_CONTRACT tc , T_STAR_FIELD tsf , T_STAR_INFO tsi2 , T_ROCKET_INFO tri , T_CATEGORY tc2 
+			WHERE tsi.CONTRACT_CD = tc.CONTRACT_CD 
+			AND tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD
+			AND tsf.STAR_CD = tsi2.STAR_CD
+			AND tc.ROCKET_CD = tri.ROCKET_CD 
+			AND tsf.CATE_CD = tc2.CATE_CD 
+			AND tsi2.STAR_CD = #{star_cd}
+			AND tc.HIDE_CHECK NOT LIKE '%b%'
+			ORDER BY TO_NUMBER(tc.CONTRACT_CD) DESC
+		]]>
+  	</select>
+  	
+  	
+  	
+  	<!-- 받은 요청 팝업창에 필요한 데이터 출력 -->
+  	<select id="selectOnePopupReqeust" resultType="popupRequestVO" parameterType="String">
+  		<![CDATA[
+			SELECT tc2.* , tri.ROCKET_CD , tri.PROFILE_IMG , tri.NAME , tsi.*, tc.STATUS_INFO 
+			FROM T_CONTRACT tc , T_SURVEY_INFO tsi , T_ROCKET_INFO tri , T_STAR_FIELD tsf , T_CATEGORY tc2 
+			WHERE tc.CONTRACT_CD = tsi.CONTRACT_CD 
+			AND tc.ROCKET_CD = tri.ROCKET_CD 
+			AND tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tsf.CATE_CD = tc2.CATE_CD 
+			AND tc.CONTRACT_CD = #{contract_cd}
+		]]>
+  	</select>
+  	<!-- contract_cd를 바탕으로 requestVO 정보 출력 -->
+  	<select id="selectOneRequestVO" resultType="requestVO" parameterType="String">
+  		<![CDATA[
+			SELECT tr.*
+			FROM T_CONTRACT tc , T_SURVEY_INFO tsi , T_REQUEST tr 
+			WHERE tc.CONTRACT_CD = tsi.CONTRACT_CD 
+			AND tsi.SURVEY_CD = tr.SURVEY_CD 
+			AND tc.CONTRACT_CD = #{contract_cd}
+		]]>
+  	</select>
+  	
+  	<!-- 입력받은 견적내용을 바탕으로 requestVO 수정 -->
+  	<update id="updateRequest" parameterType="requestVO">
+  		<![CDATA[
+			UPDATE T_REQUEST 
+			SET PRICE = #{price}, ESTIMATE_COMMENTS  = #{estimate_comments}
+			WHERE SURVEY_CD = #{survey_cd}
+		]]>
+  	</update>
+  	<!-- 견적 작성 완료 후 T_CONTRACT의 STATUS_INFO(계약상태)를 '2'로 수정, date2 수정, view_check를 '0'으로 수정 -->
+  	<update id="updateContract2" parameterType="String">
+  		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET STATUS_INFO = '2', DATE2 = SYSDATE , VIEW_CHECK = '0'
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</update>
+  	
+  	
+  	
+  	<!-- 받은 견적을 수락 후 T_CONTRACT의 STATUS_INFO(계약상태)를 '3'로 수정, date3 수정, view_check를 '0'으로 수정  -->
+  	<update id="updateContract3" parameterType="String">
+  		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET STATUS_INFO = '3', DATE3 = SYSDATE , VIEW_CHECK = '0'
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</update>
+  	
+  	
+  	
+  	<!-- 거절 시 T_CONTRACT의 STATUS_INFO(계약상태)를 '0'로 수정 -->
+  	<update id="updateRefuseContract" parameterType="String">
+  		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET STATUS_INFO = '0' , VIEW_CHECK = '0'
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</update>
+  	
+  	
+  	
+  	<!-- 리뷰 요청 후 T_CONTRACT의 STATUS_INFO(계약상태)를 '4'로 수정, date4 수정 -->
+  	<update id="updateContract4" parameterType="String">
+  		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET STATUS_INFO = '4', DATE4 = SYSDATE 
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</update>
+  	
+  	
+  	<!-- 리뷰 작성 후 T_CONTRACT의 STATUS_INFO(계약상태)를 '6'로 수정 -->
+  	<update id="updateContract5" parameterType="String">
+  		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET STATUS_INFO = '5'
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</update>
+  	
+  	
+  	
+  	<!-- 나가기버튼 클릭 시  T_CONTRACT의 STATUS_INFO(계약상태)를 '-1' or '-2' or '-3'로 수정 -->
+  	<update id="updateInvisibleContract" parameterType="java.util.Map">
+  		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET STATUS_INFO = #{status_info}
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</update>
+  	<!-- 현재 status_info 출력 -->
+  	<select id="checkStatusInfo" resultType="String" parameterType="String">
+  		<![CDATA[
+			SELECT STATUS_INFO 
+			FROM T_CONTRACT 
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</select>
+
+	<!-- hide_check 가 '0'이면 가져온 정보로 수정하고 아니면 원래 있던 정보에 더해서 수정함 -->
+  	<update id="updateHideCheck" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE T_CONTRACT
+			SET HIDE_CHECK = #{hide_check}
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+	</update>
+	<!-- 현재 contract_cd에 따른 hide_check 정보 출력 -->
+	<select id="selectOneHideCheck" resultType="String" parameterType="String">
+		<![CDATA[
+			SELECT HIDE_CHECK
+			FROM T_CONTRACT
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+	</select>
+
+  	<!-- 처음 보는거면 view_check를 '1'로 수정 -->
+  	<update id="updateViewCheck" parameterType="String">
+  		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET VIEW_CHECK = '1'
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+  	</update>
+  	
+ </mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	
+			<!-- 메인 화면의 뷰이름 --> <!-- 기본 레이아웃은 baseLayout을 상속받음 -->
+	<definition name="/chat/chatList" extends="baseLayout" >
+		<put-attribute name="title" value="채팅리스트" />
+		<put-attribute name="body" value="/WEB-INF/views/chat/chatList.jsp" />
+	</definition>
+	
+	<definition name="/chat/chatRoom" extends="baseLayout" >
+		<put-attribute name="title" value="채팅창" />
+		<put-attribute name="body" value="/WEB-INF/views/chat/chatRoom.jsp" />
+		<put-attribute name="header" value=""/>
+		<put-attribute name="footer" value="" />
+	</definition>
+	
+</tiles-definitions>

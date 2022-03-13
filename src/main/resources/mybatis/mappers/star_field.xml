@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mapper.starField">
+ 
+ 	<insert id="insertStarField" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO DEVELOCKET.T_STAR_FIELD
+			(STAR_FIELD_CD, STAR_CD, CATE_CD, PROFILE_IMG, SHORT_INTRO, DETAIL_INTRO, CAREER, BUSINESS_IMG, QNA)
+			VALUES(#{star_field_cd}, #{star_cd}, #{cate_cd}, null, null, null, null, null, null)
+		]]>
+ 	</insert>
+ 	
+ 	<select id="selectMaxStarFieldCD" resultType="String">
+ 		<![CDATA[
+			SELECT NVL(MAX(to_number(star_field_cd)), 0) + 1 FROM t_star_field
+		]]>
+ 	</select>
+
+	<!-- 스타프로필창에 들어갈 5가지 데이터들(t_star_field, t_career_img, ) -->
+ 	<select id="selectStarField" resultType="starFieldVO" parameterType="String">
+ 		<![CDATA[
+			SELECT *
+			FROM t_star_field
+			WHERE star_field_cd = #{star_field_cd}
+		]]>
+ 	</select>
+ 	
+ 	<select id="selectImageFileList" resultType="careerImgVO" parameterType="String">
+ 		<![CDATA[
+			SELECT *
+			FROM t_career_img
+			WHERE star_field_cd = #{star_field_cd}
+			ORDER BY registor_date
+		]]>
+ 	</select>
+
+	<select id="selectStarInfo" resultType="starInfoVO" parameterType="String">
+		<![CDATA[
+			SELECT tsi.*
+			FROM T_STAR_INFO tsi , T_STAR_FIELD tsf
+			WHERE tsi.STAR_CD = tsf.STAR_CD
+			AND tsf.STAR_FIELD_CD = #{star_field_cd}
+		]]>
+	</select>
+
+	<select id="selectCategory" resultType="categoryVO" parameterType="String">
+		<![CDATA[
+			SELECT tc.*
+			FROM T_CATEGORY tc , T_STAR_FIELD tsf
+			WHERE tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_FIELD_CD = #{star_field_cd}
+		]]>
+	</select>
+
+	<select id="selectReview" resultType="reviewVO" parameterType="String">
+		<![CDATA[
+			SELECT tr.*
+			FROM T_REVIEW tr , T_STAR_FIELD tsf
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD
+			AND tsf.STAR_FIELD_CD = #{star_field_cd}
+			ORDER BY tr.REVIEW_DATE DESC
+		]]>
+	</select>
+
+
+
+ 	
+ 	
+ 	
+ 	<update id="updateStarField" parameterType="java.util.Map">
+ 		<![CDATA[
+			UPDATE T_STAR_FIELD 
+			SET PROFILE_IMG = #{profile_img}, SHORT_INTRO = #{short_intro}, DETAIL_INTRO = #{detail_intro}, CAREER = #{career}, BUSINESS_IMG = #{business_img}, QNA = #{qna}
+			WHERE STAR_FIELD_CD = #{star_field_cd}
+		]]>
+ 	</update>
+ 	
+ 	<update id="updateImageFile" parameterType="java.util.List">
+ 		<foreach collection="list" item="item" open="DECLARE BEGIN" separator=";" close="; END;">
+			<choose>
+				<when test="item.imageFileName != null">
+					UPDATE T_CAREER_IMG 
+					SET imageFileName = #{item.imageFileName}
+					WHERE STAR_FIELD_CD = #{item.star_field_cd} AND CAREER_IMG_CD = #{item.career_img_cd}
+				</when>
+				<otherwise>
+					
+				</otherwise>
+			</choose>
+		</foreach>
+ 	</update>
+ 	
+ 	<insert id="insertModNewImage" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+			INTO T_CAREER_IMG (CAREER_IMG_CD , IMAGEFILENAME , STAR_FIELD_CD , REGISTOR_DATE)
+			VALUES(#{item.career_img_cd}, #{item.imageFileName}, #{item.star_field_cd}, sysdate)
+		</foreach>
+	</insert>
+	
+	<select id="selectNewCareerImgCD" resultType="String">
+		<![CDATA[
+			select nvl(max(to_number(CAREER_IMG_CD)),0) FROM T_CAREER_IMG
+		]]>
+	</select>
+ 
+ 
+ 
+ 	<delete id="deleteModImage" parameterType="careerImgVO">
+ 		<![CDATA[
+			DELETE 
+			FROM T_CAREER_IMG 
+			WHERE CAREER_IMG_CD = #{career_img_cd} AND STAR_FIELD_CD = #{star_field_cd}
+		]]>
+ 	</delete>
+ 	
+ 	
+ 	<!-- 견적 수 기준 상위 4명의 스타필드코드 불러옴 -->
+ 	<select id="selectPopularStar" resultType="previewVO">
+ 		<![CDATA[
+			SELECT rownum, ccd, STAR_FIELD_CD
+			FROM (
+				SELECT COUNT(tc.CONTRACT_CD) AS ccd, tc.STAR_FIELD_CD 
+				FROM T_CONTRACT tc
+				GROUP BY tc.STAR_FIELD_CD
+				ORDER BY ccd DESC)
+			WHERE rownum <= 4 
+		]]>
+ 	</select>
+ 	
+ 	<!-- 불러온 스타필드코드 기준으로 정보를 가져옴 -->
+ 	<select id="selectPopularStarInfo" resultType="previewVO" parameterType="java.util.List">
+			SELECT T_STAR_FIELD.STAR_CD, T_STAR_FIELD.PROFILE_IMG, T_STAR_FIELD.SHORT_INTRO, T_STAR_INFO.STAR_NICKNAME, T_CATEGORY.CATE_L , T_CATEGORY.CATE_M , T_CATEGORY.CATE_S , T_STAR_FIELD.STAR_FIELD_CD
+			FROM T_STAR_FIELD, T_STAR_INFO, T_CATEGORY
+			WHERE T_STAR_FIELD.STAR_CD = T_STAR_INFO.STAR_CD
+			AND T_STAR_FIELD.CATE_CD = T_CATEGORY.CATE_CD
+			AND T_STAR_FIELD.STAR_FIELD_CD IN
+			<foreach item="item" collection="list" open="(" close=")" separator=",">
+				#{item.star_field_cd}
+			</foreach>
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	<select id="selectOwnerRocketCD" resultType="String" parameterType="String">
+ 		<![CDATA[
+			SELECT tri.ROCKET_CD 
+			FROM T_STAR_FIELD tsf , T_STAR_INFO tsi , T_ROCKET_INFO tri 
+			WHERE tsf.STAR_CD = tsi.STAR_CD 
+			AND tsi.ROCKET_CD = tri.ROCKET_CD 
+			AND STAR_FIELD_CD = #{star_field_cd}
+		]]>
+ 	</select>
+
+
+	<!-- profile_img 를 null 로 수정 -->
+	<update id="updateProfileImage" parameterType="String">
+		<![CDATA[
+			UPDATE T_STAR_FIELD
+			SET PROFILE_IMG = NULL
+			WHERE STAR_FIELD_CD = #{star_field_cd}
+		]]>
+	</update>
+	<!-- business_img 를 null 로 수정-->
+	<update id="updateBusinessImage" parameterType="String">
+		<![CDATA[
+			UPDATE T_STAR_FIELD
+			SET BUSINESS_IMG = NULL
+			WHERE STAR_FIELD_CD = #{star_field_cd}
+		]]>
+	</update>
+ 
+ 
+ 	<!-- 스타 프로필 d로 교체-->
+ 	<update id="deleteProfile" parameterType="int">
+ 		<![CDATA[
+ 			UPDATE T_STAR_FIELD
+			SET PROFILE_IMG='d', SHORT_INTRO='d', DETAIL_INTRO='d', CAREER='d', BUSINESS_IMG='d', QNA='d'
+			WHERE STAR_FIELD_CD = #{star_field_cd}
+ 		]]>
+ 	</update>
+ 	
+ 	<!-- 스타 프로필과 연결되는 계약정보 d로 교체 -->
+ 	<update id="deleteContract" parameterType="int">
+ 		<![CDATA[
+			UPDATE T_CONTRACT
+			SET STATUS_INFO = '-4'
+			WHERE STAR_FIELD_CD = #{star_field_cd}
+		]]>
+	</update>
+	
+	<!-- 스타 프로필과 연결되는 자격증 이미지 d로 교체 -->
+	<update id="deleteCareer" parameterType="int">
+ 		<![CDATA[
+			UPDATE T_CAREER_IMG
+			SET IMAGEFILENAME = 'd', REGISTOR_DATE = null
+			WHERE STAR_FIELD_CD = #{star_field_cd}
+		]]>
+	</update>
+	
+	
+	<!-- 불러온 카테고리 기준으로 스타필드코드를 가져옴 -->
+ 	<select id="selectRandomStarM" resultType="previewVO" parameterType="String">
+ 		<![CDATA[
+			SELECT T_STAR_FIELD.STAR_CD, T_STAR_FIELD.STAR_FIELD_CD, T_STAR_FIELD.PROFILE_IMG, T_STAR_FIELD.SHORT_INTRO, T_STAR_INFO.STAR_NICKNAME, T_CATEGORY.CATE_L , T_CATEGORY.CATE_M , T_CATEGORY.CATE_S
+			FROM T_STAR_FIELD, T_STAR_INFO, T_CATEGORY
+			WHERE T_STAR_FIELD.STAR_CD = T_STAR_INFO.STAR_CD 
+			AND T_STAR_FIELD.CATE_CD = T_CATEGORY.CATE_CD 
+			AND (T_STAR_FIELD.PROFILE_IMG IS NULL OR T_STAR_FIELD.PROFILE_IMG <> 'd')
+			AND T_CATEGORY.CATE_M = #{cate_m}
+		]]>
+ 	</select>
+ 	
+ 	<!-- 불러온 카테고리와 지역기준으로 스타필드코드를 가져옴 -->
+ 	<select id="selectRandomStarMA" resultType="previewVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT T_STAR_FIELD.STAR_CD, T_STAR_FIELD.STAR_FIELD_CD, T_STAR_FIELD.PROFILE_IMG, T_STAR_FIELD.SHORT_INTRO, T_STAR_INFO.STAR_NICKNAME, T_CATEGORY.CATE_L , T_CATEGORY.CATE_M , T_CATEGORY.CATE_S
+			FROM T_STAR_FIELD, T_STAR_INFO, T_CATEGORY
+			WHERE T_STAR_FIELD.STAR_CD = T_STAR_INFO.STAR_CD 
+			AND T_STAR_FIELD.CATE_CD = T_CATEGORY.CATE_CD 
+			AND (T_STAR_FIELD.PROFILE_IMG IS NULL OR T_STAR_FIELD.PROFILE_IMG <> 'd')
+			AND T_CATEGORY.CATE_M = #{cate_m}
+			AND T_STAR_INFO.AREA LIKE #{area}||'%'
+		]]>
+ 	</select>
+ 	
+ 	<!-- 불러온 카테고리 기준으로 스타필드코드를 가져옴 -->
+ 	<select id="selectRandomStarS" resultType="previewVO" parameterType="String">
+ 		<![CDATA[
+			SELECT T_STAR_FIELD.STAR_CD, T_STAR_FIELD.STAR_FIELD_CD, T_STAR_FIELD.PROFILE_IMG, T_STAR_FIELD.SHORT_INTRO, T_STAR_INFO.STAR_NICKNAME, T_CATEGORY.CATE_L , T_CATEGORY.CATE_M , T_CATEGORY.CATE_S
+			FROM T_STAR_FIELD, T_STAR_INFO, T_CATEGORY
+			WHERE T_STAR_FIELD.STAR_CD = T_STAR_INFO.STAR_CD 
+			AND T_STAR_FIELD.CATE_CD = T_CATEGORY.CATE_CD 
+			AND (T_STAR_FIELD.PROFILE_IMG IS NULL OR T_STAR_FIELD.PROFILE_IMG <> 'd')
+			AND T_CATEGORY.CATE_S = #{cate_s}
+		]]>
+ 	</select>
+ 	
+ 	<!-- 불러온 카테고리와 지역기준으로 스타필드코드를 가져옴 -->
+ 	<select id="selectRandomStarSA" resultType="previewVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT T_STAR_FIELD.STAR_CD, T_STAR_FIELD.STAR_FIELD_CD, T_STAR_FIELD.PROFILE_IMG, T_STAR_FIELD.SHORT_INTRO, T_STAR_INFO.STAR_NICKNAME, T_CATEGORY.CATE_L , T_CATEGORY.CATE_M , T_CATEGORY.CATE_S
+			FROM T_STAR_FIELD, T_STAR_INFO, T_CATEGORY
+			WHERE T_STAR_FIELD.STAR_CD = T_STAR_INFO.STAR_CD 
+			AND T_STAR_FIELD.CATE_CD = T_CATEGORY.CATE_CD 
+			AND (T_STAR_FIELD.PROFILE_IMG IS NULL OR T_STAR_FIELD.PROFILE_IMG <> 'd')
+			AND T_CATEGORY.CATE_S = #{cate_s}
+			AND T_STAR_INFO.AREA LIKE #{area}||'%'
+		]]>
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!-- 리뷰 수 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarReviewMA" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tr.REVIEW_CD) AS cd, tr.STAR_FIELD_CD 
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_M = #{cate_m}
+			AND tsi.AREA LIKE #{area}||'%'
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 별점 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRatingMA" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+ 			SELECT AVG(tr.RATING) AS cd, tr.STAR_FIELD_CD
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_M = #{cate_m}
+			AND tsi.AREA LIKE #{area}||'%'
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 요청 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRequestMA" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tc2.CONTRACT_CD) AS cd, tc2.STAR_FIELD_CD 
+			FROM T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi , T_CONTRACT tc2  
+			WHERE tc.CATE_CD = tsf.CATE_CD
+			AND t
+			sf.STAR_CD = tsi.STAR_CD
+			AND tc2.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc2.STATUS_INFO IN (1, 2, 3, 4, 5)
+			AND tc.CATE_M = #{cate_m}
+			AND tsi.AREA LIKE #{area}||'%'
+			GROUP BY tc2.STAR_FIELD_CD 
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	
+ 	<!-- 리뷰 수 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarReviewM" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tr.REVIEW_CD) AS cd, tr.STAR_FIELD_CD 
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_M = #{cate_m}
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 별점 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRatingM" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT AVG(tr.RATING) AS cd, tr.STAR_FIELD_CD 
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_M = #{cate_m}
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 요청 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRequestM" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tc2.CONTRACT_CD) AS cd, tc2.STAR_FIELD_CD 
+			FROM T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi , T_CONTRACT tc2  
+			WHERE tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc2.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc2.STATUS_INFO IN (1, 2, 3, 4, 5)
+			AND tc.CATE_M = #{cate_m}
+			GROUP BY tc2.STAR_FIELD_CD 
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	
+ 	<!-- 리뷰 수 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarReviewSA" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tr.REVIEW_CD) AS cd, tr.STAR_FIELD_CD 
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_S = #{cate_s}
+			AND tsi.AREA LIKE #{area}||'%'
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 별점 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRatingSA" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT AVG(tr.RATING) AS cd, tr.STAR_FIELD_CD
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_S = #{cate_s}
+			AND tsi.AREA LIKE #{area}||'%'
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 요청 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRequestSA" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tc2.CONTRACT_CD) AS cd, tc2.STAR_FIELD_CD 
+			FROM T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi , T_CONTRACT tc2  
+			WHERE tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc2.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc2.STATUS_INFO IN (1, 2, 3, 4, 5)
+			AND tc.CATE_S = #{cate_s}
+			AND tsi.AREA LIKE #{area}||'%'
+			GROUP BY tc2.STAR_FIELD_CD 
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 리뷰 수 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarReviewS" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tr.REVIEW_CD) AS cd, tr.STAR_FIELD_CD 
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_S = #{cate_s}
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 별점 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRatingS" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT AVG(tr.RATING) AS cd, tr.STAR_FIELD_CD 
+			FROM T_REVIEW tr, T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi 
+			WHERE tr.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc.CATE_S = #{cate_s}
+			GROUP BY tr.STAR_FIELD_CD
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 요청 기준 스타필드코드 불러옴 -->
+ 	<select id="selectLineUpStarRequestS" resultType="starLineUpVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT COUNT(tc2.CONTRACT_CD) AS cd, tc2.STAR_FIELD_CD 
+			FROM T_CATEGORY tc, T_STAR_FIELD tsf, T_STAR_INFO tsi , T_CONTRACT tc2  
+			WHERE tc.CATE_CD = tsf.CATE_CD
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tc2.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc2.STATUS_INFO IN (1, 2, 3, 4, 5)
+			AND tc.CATE_S = #{cate_s}
+			GROUP BY tc2.STAR_FIELD_CD 
+			ORDER BY cd DESC
+		]]>
+ 	</select>
+ 	
+ 	<!-- 불러온 스타필드코드 기준으로 정보를 가져옴 -->
+ 	<select id="selectLineUpStarInfo" resultType="starLineUpVO" parameterType="java.util.List">
+		<![CDATA[
+			SELECT T_STAR_FIELD.PROFILE_IMG, T_STAR_FIELD.SHORT_INTRO, T_STAR_INFO.STAR_NICKNAME, T_STAR_FIELD.STAR_FIELD_CD
+			FROM T_STAR_FIELD, T_STAR_INFO
+			WHERE T_STAR_FIELD.STAR_CD = T_STAR_INFO.STAR_CD
+			AND (T_STAR_FIELD.PROFILE_IMG IS NULL OR T_STAR_FIELD.PROFILE_IMG != 'd')
+			AND T_STAR_FIELD.STAR_FIELD_CD IN
+				<foreach item="item" collection="list" open="(" close=")" separator=",">
+					#{item.star_field_cd}
+				</foreach>
+		]]>
+ 	</select>
+
+
+	<select id="selectLineUpStarInfoLee" resultType="starLineUpVO" parameterType="String">
+		<![CDATA[
+			SELECT tsf.STAR_FIELD_CD , tsf.PROFILE_IMG , tsf.SHORT_INTRO , tsi.STAR_NICKNAME , tc2.CATE_L , tc2.CATE_M , tc2.CATE_S
+			FROM T_STAR_FIELD tsf , T_STAR_INFO tsi , T_CATEGORY tc2
+			WHERE tsf.STAR_CD = tsi.STAR_CD
+			AND tsf.CATE_CD = tc2.CATE_CD
+			AND (tsf.PROFILE_IMG IS NULL OR tsf.PROFILE_IMG != 'd')
+			AND TSF .STAR_FIELD_CD = #{star_field_cd}
+		]]>
+	</select>
+
+ </mapper>

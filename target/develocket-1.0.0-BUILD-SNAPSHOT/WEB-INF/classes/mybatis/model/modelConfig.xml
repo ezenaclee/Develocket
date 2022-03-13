@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.ezen.develocket.rocketInfo.vo.RocketInfoVO" alias="rocketInfoVO" />
+		<typeAlias type="com.ezen.develocket.inquiry.vo.InquiryVO" alias="inquiryVO" />
+		<typeAlias type="com.ezen.develocket.inquiry.vo.InquiryImgVO" alias="inquiryImgVO" />
+		<typeAlias type="com.ezen.develocket.starInfo.vo.StarInfoVO" alias="starInfoVO" />
+		<typeAlias type="com.ezen.develocket.starInfo.vo.CategoryVO" alias="categoryVO" />
+		<typeAlias type="com.ezen.develocket.starField.vo.StarFieldVO" alias="starFieldVO" />
+		<typeAlias type="com.ezen.develocket.starField.vo.CareerImgVO" alias="careerImgVO" />
+		<typeAlias type="com.ezen.develocket.starField.vo.PreviewVO" alias="previewVO" />
+		<typeAlias type="com.ezen.develocket.starField.vo.StarLineUpVO" alias="starLineUpVO" />
+		<typeAlias type="com.ezen.develocket.survey.vo.SurveyInfoVO" alias="surveyInfoVO" />
+		<typeAlias type="com.ezen.develocket.survey.vo.ContractVO" alias="contractVO" />
+		<typeAlias type="com.ezen.develocket.request.vo.RequestVO" alias="requestVO" />
+		<typeAlias type="com.ezen.develocket.request.vo.PopupRequestVO" alias="popupRequestVO" />
+		<typeAlias type="com.ezen.develocket.request.vo.ReceiveRequestVO" alias="receiveRequestVO" />
+		<typeAlias type="com.ezen.develocket.request.vo.EstimateVO" alias="estimateVO" />
+		<typeAlias type="com.ezen.develocket.request.vo.ReceiveEstimateVO" alias="receiveEstimateVO" />
+		<typeAlias type="com.ezen.develocket.chat.vo.ChatContentVO" alias="chatContentVO" />
+		<typeAlias type="com.ezen.develocket.chat.vo.RocketChatVO" alias="rocketChatVO" />
+		<typeAlias type="com.ezen.develocket.chat.vo.StarChatVO" alias="starChatVO" />
+		<typeAlias type="com.ezen.develocket.chat.vo.ChatRoomVO" alias="chatRoomVO" />
+		<typeAlias type="com.ezen.develocket.review.vo.ReviewVO" alias="reviewVO" />
+		<typeAlias type="com.ezen.develocket.mypage.vo.MypageVO" alias="mypageVO" />
+		<typeAlias type="com.ezen.develocket.survey.vo.ViewCheckVO" alias="viewCheckVO" />
+	</typeAliases>
+</configuration>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mapper.inquiry">
+ 
+ 	<resultMap type="inquiryVO" id="inquiryResult">
+ 		<result property="level" column="lvl" />
+		<result property="inquiry_cd" column="inquiry_cd" />
+		<result property="parent_cd" column="parent_cd" />
+		<result property="group_cd" column="group_cd" />
+		<result property="inquiry_title" column="inquiry_title" />
+		<result property="inquiry_content" column="inquiry_content" />
+		<result property="id" column="id" />
+		<result property="write_date" column="write_date" />
+		<result property="profile_img" column="profile_img" />
+	</resultMap>
+ 
+ 	<!-- 전체 문의글 가져오기 -->
+ 	<select id="selectAllInquiryList" resultMap="inquiryResult" parameterType="java.util.Map">
+		<![CDATA[
+			select lvl, inquiry_cd, parent_cd, group_cd, inquiry_title, rocket_cd, write_date, id , profile_img
+			from (
+					 select group_cd, lvl, inquiry_cd, parent_cd, inquiry_title, rocket_cd, write_date, id , profile_img
+					 from (
+							  select  group_cd, level as lvl, inquiry_cd, parent_cd, inquiry_title, rocket_cd, write_date, id , profile_img
+							  from (
+									   select ti.INQUIRY_CD , ti.PARENT_CD , ti.GROUP_CD , ti.INQUIRY_TITLE , ti.INQUIRY_CONTENT , ti.ROCKET_CD , ti.WRITE_DATE , tri.ID , tri.PROFILE_IMG
+									   from T_INQUIRY ti JOIN T_ROCKET_INFO tri ON ti.ROCKET_CD = tri.ROCKET_CD
+									   where group_cd in (
+										   select group_cd
+										   from (
+													SELECT ROWNUM as recNum, group_cd
+													FROM (
+															 SELECT DISTINCT group_cd from T_INQUIRY
+															 order by TO_NUMBER(group_cd) DESC
+														 )
+												)
+										   WHERE recnum BETWEEN (#{section} - 1) * 100 + (#{pageNum} - 1) * 10 + 1 AND (#{section} - 1) * 100 + #{pageNum} * 10
+									   )
+								   )
+									   start with parent_cd = 0
+							  connect by prior inquiry_cd = parent_cd
+							  order siblings by write_date DESC
+						  )
+				 )
+		]]>
+	</select>
+	
+	<!-- 전체 문의글 개수 -->
+	<select id="selectTotalInquiry" resultType="int">
+		<![CDATA[
+			SELECT COUNT(DISTINCT group_cd) 
+			FROM T_INQUIRY
+		]]>
+	</select>
+	
+	
+	
+	<!-- 새 문의글 입력 -->
+	<insert id="insertNewInquiry" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO T_INQUIRY (group_cd, inquiry_cd, parent_cd, inquiry_title, inquiry_content, rocket_cd)
+				VALUES (#{group_cd}, #{inquiry_cd}, #{parent_cd}, #{inquiry_title}, #{inquiry_content}, #{rocket_cd})
+		]]>	
+	</insert>
+	<!-- 최대그룹코드 -->
+	<select id="selectNewGroupCD" resultType="String">
+		<![CDATA[
+			SELECT NVL(MAX(to_number(group_cd)), 0) + 1 FROM T_INQUIRY
+		]]>	
+	</select>
+	<!-- 최대문의코드 -->
+	<select id="selectInquiryCD" resultType="String">
+		<![CDATA[
+			SELECT NVL(MAX(to_number(inquiry_cd)), 0) + 1 FROM T_INQUIRY
+		]]>	
+	</select>
+	<!-- TODO 해야함!!!!!!!!!!! -->
+	<insert id="insertNewImage" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL" >
+			INTO T_INQUIRY_IMG(inquiry_img_cd, imageFileName, inquiry_cd, registor_date)
+				VALUES(#{item.inquiry_img_cd}, #{item.imageFileName}, #{item.inquiry_cd}, sysdate)
+		</foreach>
+	</insert>
+	<!-- 최대이미지코드 -->
+	<select id="selectNewImageFileCD" resultType="String">
+		<![CDATA[
+			select nvl(max(to_number(INQUIRY_IMG_CD)),0) FROM T_INQUIRY_IMG
+		]]>	
+	</select>
+ 
+ 
+ 
+ 	<!-- 문의글 상세보기 -->
+ 	<select id="selectInquiry" resultMap="inquiryResult" parameterType="String">
+ 		<![CDATA[
+			SELECT ti.INQUIRY_CD , ti.PARENT_CD , ti.GROUP_CD , ti.INQUIRY_TITLE , ti.INQUIRY_CONTENT , ti.ROCKET_CD , ti.WRITE_DATE , tri.ID
+			FROM T_INQUIRY ti 
+			JOIN T_ROCKET_INFO tri ON ti.ROCKET_CD = tri.ROCKET_CD
+			WHERE inquiry_cd = #{inquiry_cd}
+		]]>
+ 	</select>
+ 	<!-- 문의글 상세페이지에 들어갈 이미지들 -->
+ 	<select id="selectImageFileList" resultType="inquiryImgVO" parameterType="String">
+		<![CDATA[
+			SELECT *
+			FROM T_INQUIRY_IMG
+			WHERE inquiry_cd = #{inquiry_cd}
+			ORDER BY registor_date
+		]]>
+	</select>
+	
+	
+	
+	<!-- 문의글 수정하기 -->
+	<update id="updateInquiry" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE T_INQUIRY
+			SET inquiry_title = #{inquiry_title}, inquiry_content = #{inquiry_content}
+			WHERE inquiry_cd = #{inquiry_cd}
+		]]>
+	</update>
+	<!-- 문의글 새로운 이미지 추가하기 -->
+	<insert id="insertModNewImage" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+			INTO T_INQUIRY_IMG(inquiry_img_cd, imageFileName, inquiry_cd, registor_date)
+				VALUES(#{item.inquiry_img_cd}, #{item.imageFileName}, #{item.inquiry_cd}, sysdate)
+		</foreach>
+	</insert>
+	
+	
+	
+	<!-- 문의글 전체 삭제하기 -->
+	<delete id="deleteInquiry" parameterType="String">
+		<![CDATA[
+			DELETE 
+			FROM T_INQUIRY
+			WHERE inquiry_cd IN (
+					SELECT inquiry_cd FROM T_INQUIRY
+					START WITH inquiry_cd = #{inquiry_cd}
+					CONNECT BY PRIOR inquiry_cd = parent_cd
+				)
+		]]>
+	</delete>
+	<!-- 문의글 선택이미지 삭제하기 -->
+	<delete id="deleteExistImage" parameterType="inquiryImgVO" >
+		<![CDATA[
+			DELETE 
+			FROM T_INQUIRY_IMG
+			WHERE inquiry_img_cd = #{inquiry_img_cd} AND inquiry_cd = #{inquiry_cd}
+		]]>
+	</delete>
+	
+ </mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+		   
+	<definition name="rocketInfo/searchIDPasswordForm" extends="baseLayout" >
+		<put-attribute name="title" value="메인페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/rocketInfo/searchIDPasswordForm.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	
+	<!-- 컨트롤러에서 반환되는 뷰이름 지정 --> <!-- 기본 레이아웃을 상속받음 -->
+	<definition name="/rocketInfo/loginForm" extends="baseLayout">
+		<put-attribute name="title" value="로그인"/>		<!-- JSP 페이지 제목 지정 -->
+		<put-attribute name="body" value="/WEB-INF/views/rocketInfo/loginForm.jsp" />	<!-- 레이아웃 본문에 표시할 JSP 위치 -->
+	</definition>
+	
+		   <!-- 컨트롤러에서 반환되는 뷰이름 지정 --> <!-- 기본 레이아웃을 상속받음 -->
+	<definition name="/rocketInfo/joinForm" extends="baseLayout">
+		<put-attribute name="title" value="회원가입"/>		<!-- JSP 페이지 제목 지정 -->
+		<put-attribute name="body" value="/WEB-INF/views/rocketInfo/joinForm.jsp" />	<!-- 레이아웃 본문에 표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="/rocketInfo/searchIDPasswordForm" extends="baseLayout">
+		<put-attribute name="title" value="아이디비밀번호찾기"/>		<!-- JSP 페이지 제목 지정 -->
+		<put-attribute name="body" value="/WEB-INF/views/rocketInfo/searchIDPasswordForm.jsp" />	<!-- 레이아웃 본문에 표시할 JSP 위치 -->
+	</definition>
+
+
+
+	<!-- 컨트롤러에서 반환되는 뷰이름 지정 --> <!-- 기본 레이아웃을 상속받음 -->
+	<definition name="/rocketInfo/naverLoginForm" extends="baseLayout">
+		<put-attribute name="title" value="로그인"/>		<!-- JSP 페이지 제목 지정 -->
+		<put-attribute name="body" value="/WEB-INF/views/rocketInfo/naverLoginForm.jsp" />	<!-- 레이아웃 본문에 표시할 JSP 위치 -->
+	</definition>
+
+
+</tiles-definitions>

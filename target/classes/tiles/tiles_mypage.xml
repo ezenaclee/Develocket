@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	
+			<!-- 메인 화면의 뷰이름 --> <!-- 기본 레이아웃은 baseLayout을 상속받음 -->
+	<definition name="/mypage/myPageView" extends="baseLayout" >
+		<put-attribute name="title" value="마이페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/mypage/myPageView.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="/mypage/recheckPassword" extends="baseLayout" >
+		<put-attribute name="title" value="비밀번호 재확인" />
+		<put-attribute name="body" value="/WEB-INF/views/mypage/recheckPassword.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="/mypage/modMemberInfo" extends="baseLayout" >
+		<put-attribute name="title" value="프로필 정보 수정" />
+		<put-attribute name="body" value="/WEB-INF/views/mypage/modMemberInfo.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+</tiles-definitions>

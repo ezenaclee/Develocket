@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/chat/chatList.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/chat" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/chat/chatRoom.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/chat" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/common/main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/common" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/common/test.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/common" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/inquiry/inquiryList.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/inquiry" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/inquiry/inquiryVeiw.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/inquiry" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/mypage/modMemberInfo.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/mypage" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/mypage/modStarInfoForm.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/mypage" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/mypage/myPageView.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/mypage" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/request/receiveRequestList.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/request" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/starInfo/joinStarForm.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/starInfo" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/starcategory/starcategory_detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/starcategory" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/survey/surveyView.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/survey" />
+      </map>
+    </option>
+  </component>
+</project>

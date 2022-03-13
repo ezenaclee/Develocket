@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	
+			<!-- 메인 화면의 뷰이름 --> <!-- 기본 레이아웃은 baseLayout을 상속받음 -->
+	<definition name="/starInfo/joinStarForm" extends="baseLayout" >
+		<put-attribute name="title" value="스타등록" />
+		<put-attribute name="body" value="/WEB-INF/views/starInfo/joinStarForm.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="/mypage/modStarInfoForm" extends="baseLayout">
+		<put-attribute name="title" value="스타정보수정"/>		<!-- JSP 페이지 제목 지정 -->
+		<put-attribute name="body" value="/WEB-INF/views/mypage/modStarInfoForm.jsp" />	<!-- 레이아웃 본문에 표시할 JSP 위치 -->
+	</definition>
+	
+</tiles-definitions>

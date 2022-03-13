@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mapper.mypageInfo">
+	
+	<select id="selectMyPageVO" resultType="mypageVO" parameterType="String">
+		<![CDATA[
+		SELECT ROCKET_CD , ID , NAME , EMAIL , PASSWORD , PHONE_NUMBER , PROFILE_IMG
+		FROM T_ROCKET_INFO
+		WHERE rocket_cd = #{rocket_cd}
+		]]>
+	</select>
+
+	<select id="selectRocketInfo" resultType="rocketInfoVO" parameterType="String">
+		<![CDATA[
+		SELECT *
+		FROM T_ROCKET_INFO
+		WHERE rocket_cd = #{rocket_cd}
+		]]>
+	</select>
+	
+	<select id="reCheckPwd" resultType="mypageVO" parameterType="mypageVO">
+		<![CDATA[
+			SELECT *
+			FROM T_ROCKET_INFO
+			WHERE id = #{id} AND rocket_cd = #{rocket_cd}
+		]]>
+	</select>
+		
+	<update id="modifyRocketInfo">
+		<![CDATA[
+			UPDATE T_ROCKET_INFO 
+			SET PASSWORD = #{password}
+			WHERE ID = #{id} AND ROCKET_CD = #{rocket_cd}
+		]]>
+	</update>
+	
+	<update id="deleteRocketInfo">
+		<![CDATA[
+			UPDATE T_ROCKET_INFO 
+			SET ID = 'd'
+				,NAME = 'd'
+				,EMAIL = 'd'
+				,PASSWORD = 'd'
+				,PHONE_NUMBER = 'd'
+				,PROFILE_IMG = 'd'
+				,JOIN_DATE = NULL 
+			WHERE ROCKET_CD = #{rocket_cd} AND ID = #{id}
+		]]>
+	</update>
+
+
+	<!-- 로켓 프로필 이미지 수정 -->
+	<update id="updateProfileImage" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE T_ROCKET_INFO
+			SET PROFILE_IMG = #{profile_img}
+			WHERE ROCKET_CD = #{rocket_cd}
+		]]>
+	</update>
+
+
+	<!-- 로켓 프로필 삭제 -->
+	<update id="updateRemoveProfile" parameterType="String">
+		<![CDATA[
+			UPDATE T_ROCKET_INFO
+			SET PROFILE_IMG = NULL
+			WHERE ROCKET_CD = #{rocket_cd}
+		]]>
+	</update>
+
+
+	<select id="checkStarCD" resultType="String" parameterType="String">
+		<![CDATA[
+			SELECT NVL(MAX(TO_NUMBER(STAR_CD)), '0')
+			FROM T_STAR_INFO
+			WHERE ROCKET_CD = #{rocket_cd}
+			AND AREA  != 'd'
+		]]>
+	</select>
+
+ </mapper>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mapper.starInfo">
+ 
+ 	<insert id="insertStarInfo" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO T_STAR_INFO (star_cd, rocket_cd, star_nickname, area)
+			VALUES (#{star_cd}, #{rocket_cd}, #{star_nickname}, #{area})
+		]]>
+	</insert>
+	
+	<select id="selectMaxStarCD" resultType="String">
+		<![CDATA[
+			SELECT NVL(MAX(to_number(star_cd)), 0) + 1 FROM T_STAR_INFO
+		]]>
+	</select>
+	
+	<select id="selectCateCD" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT cate_cd 
+			FROM t_category
+			where cate_s = #{cate_s}
+		]]>
+	</select>
+ 
+ 
+ 	<!-- 로그인한 로켓의 star_cd 찾기 -->
+ 	<select id="selectStarCD" resultType="String" parameterType="String">
+ 		<![CDATA[
+			SELECT NVL(MAX(TO_NUMBER(STAR_CD)), '0')
+			FROM T_STAR_INFO
+			WHERE ROCKET_CD = #{rocket_cd}
+			AND AREA  != 'd'
+		]]>
+ 	</select>
+
+	<!-- star_cd에 있는 area 출력 -->
+	<select id="selectArea" resultType="String" parameterType="String">
+		<![CDATA[
+			SELECT AREA
+			FROM T_STAR_INFO
+			WHERE STAR_CD = #{star_cd}
+		]]>
+	</select>
+
+
+
+	<!-- 닉네임 중복 체크 여부 -->
+	<select id="selectCheckNickName" resultType="int" parameterType="String">
+		<![CDATA[
+			SELECT COUNT(STAR_NICKNAME)
+			FROM T_STAR_INFO
+			WHERE STAR_NICKNAME = #{star_nickname}
+		]]>
+	</select>
+
+ 	<!--<select id="selectOwnStarCD" resultType="String" parameterType="String">
+ 		<![CDATA[
+			SELECT STAR_CD
+			FROM T_STAR_INFO tsi
+			WHERE ROCKET_CD = #{rocket_cd}
+		]]>
+ 	</select>-->
+
+	<!-- starInfo 가져옴 -->
+ 	<select id="selectStarInfo" resultType="starInfoVO" parameterType="String">
+ 		<![CDATA[
+			SELECT *
+			FROM t_star_info
+			WHERE star_cd = #{star_cd}
+		]]>
+ 	</select>
+ 	
+ 	<!-- 닉네임 중복체크 -->
+ 	<select id="nicknameCheck" resultType="int" parameterType="String">
+ 		<![CDATA[
+ 			SELECT COUNT(star_nickname) FROM T_STAR_INFO
+			WHERE STAR_NICKNAME = #{star_nickname}
+ 		]]>
+ 	</select>
+ 	
+ 	<!-- 닉네임 변경 -->
+ 	<update id="nicknameUpdate" parameterType="starInfoVO">
+ 		<![CDATA[
+			UPDATE T_STAR_INFO
+			SET STAR_NICKNAME = #{star_nickname}
+			WHERE STAR_CD = #{star_cd}
+		]]>
+ 	</update>
+ 	
+ 	<!-- 활동지역 변경 -->
+ 	<update id="areaModify" parameterType="starInfoVO">
+ 		<![CDATA[
+			UPDATE T_STAR_INFO
+			SET AREA = #{area}
+			WHERE STAR_CD = #{star_cd}
+		]]>
+	</update>
+	
+	<!-- 스타 제거 (코드를 제외한 모든 데이터 d로 변경) -->
+ 	<update id="deleteStarInfo" parameterType="String">
+ 		<![CDATA[
+			UPDATE T_STAR_INFO
+			SET STAR_NICKNAME = 'd', AREA = 'd'
+			WHERE STAR_CD = #{star_cd}
+		]]>
+	</update>
+	
+	<!-- star_cd로 star_field_cd 값 찾아오기 -->
+	<select id="findStarFieldCd" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT STAR_FIELD_CD
+			FROM T_STAR_FIELD
+			WHERE STAR_CD =#{star_cd}
+		]]>
+	</select>
+	
+	<!-- star_field_cd값만큼 스타 프로필 제거 (코드를 제외한 모든 데이터 d로 변경) -->
+	<update id="deleteProfile" parameterType="java.util.Map">
+		UPDATE T_STAR_FIELD
+		SET PROFILE_IMG='d', SHORT_INTRO='d', DETAIL_INTRO='d', CAREER='d', BUSINESS_IMG='d', QNA='d'
+		WHERE STAR_FIELD_CD IN
+			<foreach collection="star_field_cd" item="value" index="key" separator="," open="(" close=")">
+				#{value}
+			</foreach>
+	</update>
+	
+	<!-- 스타 프로필과 연결되는 계약정보 d로 교체 -->
+ 	<update id="deleteContract" parameterType="java.util.Map">
+		UPDATE T_CONTRACT
+		SET STATUS_INFO = '-4'
+		WHERE STAR_FIELD_CD IN
+			<foreach collection="star_field_cd" item="value" index="key" separator="," open="(" close=")">
+				#{value}
+			</foreach>
+	</update>
+	
+	<!-- 스타 프로필과 연결되는 자격증 이미지 d로 교체 -->
+	<update id="deleteCareer" parameterType="java.util.Map">
+		UPDATE T_CAREER_IMG
+		SET IMAGEFILENAME = 'd', REGISTOR_DATE = null
+		WHERE STAR_FIELD_CD IN
+			<foreach collection="star_field_cd" item="value" index="key" separator="," open="(" close=")">
+				#{value}
+			</foreach>
+	</update>
+	
+	<!-- rocket_cd 찾아오기 -->
+	<select id="findRocketCd" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT ROCKET_CD
+			FROM T_STAR_INFO
+			WHERE STAR_CD = #{star_cd}
+		]]>
+	</select>
+	
+	<!-- 비밀번호 체크 -->
+	<select id="checkPwd" parameterType="java.util.Map" resultType="int">
+		<![CDATA[
+			SELECT COUNT(id)
+			FROM T_ROCKET_INFO
+			WHERE ROCKET_CD = #{rocket_cd}
+			AND PASSWORD = #{password}
+		]]>
+	</select>
+ </mapper>

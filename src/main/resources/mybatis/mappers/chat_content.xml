@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mapper.chatContent">
+ 
+ 	<!-- 채팅방 활성화 -->
+ 	<insert id="insertNewChatContent" parameterType="chatContentVO">
+ 		<selectKey keyProperty="chat_content_cd" resultType="String" order="BEFORE">
+			SELECT NVL(MAX(to_number(chat_content_cd)), 0) + 1 FROM T_CHAT_CONTENT
+		</selectKey>
+  		<![CDATA[
+			INSERT INTO DEVELOCKET.T_CHAT_CONTENT (CHAT_CONTENT_CD, CHAT_SN, SENDER_ID, MESSAGE, SEND_TIME, CONTRACT_CD)
+				VALUES(#{chat_content_cd}, #{chat_sn}, #{sender_id}, #{message}, SYSDATE , #{contract_cd})
+		]]>
+ 	</insert>
+ 	
+ 	
+ 	
+ 	<!-- 본인이 로켓인 상태의 가장 최근 채팅 -->
+ 	<select id="selectAllRocketChatList" resultType="rocketChatVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT r2.CATE_CD , r2.CATE_L , r2.CATE_M , r2.CATE_S , r2.STAR_FIELD_CD , r2.PROFILE_IMG , r2.STAR_CD , r2.STAR_NICKNAME , r2.MESSAGE , r2.SEND_TIME , r2.CONTRACT_CD , r2.STATUS_INFO , r2.VIEW_CHECK
+			FROM (
+				SELECT rownum , r1.*
+				FROM (
+					SELECT tc2.* , tsf.STAR_FIELD_CD , tsf.PROFILE_IMG , tsi.STAR_CD , tsi.STAR_NICKNAME , tcc.MESSAGE , tcc.SEND_TIME , tc.CONTRACT_CD , tc.STATUS_INFO , tc.VIEW_CHECK
+					FROM T_CONTRACT tc , T_CHAT_CONTENT tcc , T_STAR_FIELD tsf , T_STAR_INFO tsi , T_CATEGORY tc2 
+					WHERE tc.CONTRACT_CD = tcc.CONTRACT_CD 
+					AND tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+					AND tsf.STAR_CD = tsi.STAR_CD 
+					AND tsf.CATE_CD = tc2.CATE_CD 
+					AND tc.ROCKET_CD = #{rocket_cd}
+					AND tc.CONTRACT_CD = #{contract_cd}
+					AND tc.HIDE_CHECK NOT LIKE '%c%'
+					ORDER BY tcc.SEND_TIME DESC
+				) r1
+			) r2
+			WHERE rownum = 1
+		]]>
+ 	</select>
+ 	<!-- 본인이 로켓인 상태에서 status_info >= '3'인 모든 contract_cd -->
+ 	<select id="selectRocketContract3" resultType="String" parameterType="String">
+ 		<![CDATA[
+			SELECT CONTRACT_CD 
+			FROM T_CONTRACT 
+			WHERE ROCKET_CD = #{rocket_cd}
+			AND STATUS_INFO >= '3'
+			ORDER BY TO_NUMBER(CONTRACT_CD) DESC
+		]]>
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	<!-- 본인이 스타인 상태의 가장 최근 채팅 -->
+ 	<select id="selectAllStarChatList" resultType="starChatVO" parameterType="java.util.Map">
+ 		<![CDATA[
+			SELECT r2.CATE_CD , r2.CATE_L , r2.CATE_M , r2.CATE_S , r2.ROCKET_CD , r2.PROFILE_IMG , r2.NAME , r2.MESSAGE , r2.SEND_TIME , r2.CONTRACT_CD , r2.STATUS_INFO , r2.VIEW_CHECK
+			FROM (
+				SELECT rownum , r1.*
+				FROM (
+					SELECT tc2.* , tri.ROCKET_CD , tri.PROFILE_IMG , tri.NAME , tcc.MESSAGE , tcc.SEND_TIME , tc.CONTRACT_CD , tc.STATUS_INFO , tc.VIEW_CHECK
+					FROM T_CONTRACT tc , T_CHAT_CONTENT tcc , T_STAR_FIELD tsf , T_CATEGORY tc2 , T_STAR_INFO tsi , T_ROCKET_INFO tri
+					WHERE tc.CONTRACT_CD = tcc.CONTRACT_CD 
+					AND tc.ROCKET_CD = tri.ROCKET_CD 
+					AND tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+					AND tsf.CATE_CD = tc2.CATE_CD 
+					AND tsf.STAR_CD = tsi.STAR_CD 
+					AND tsi.STAR_CD = #{star_cd}
+					AND tc.CONTRACT_CD = #{contract_cd}
+					AND tc.HIDE_CHECK NOT LIKE '%d%'
+					ORDER BY tcc.SEND_TIME DESC 
+				) r1
+			) r2
+			WHERE rownum = 1
+		]]>
+ 	</select>
+ 	<!-- 본인이 스타인 상태에서 status_info >= '3'인 모든 contract_cd -->
+ 	<select id="selectStarContract3" resultType="String" parameterType="String">
+ 		<![CDATA[
+			SELECT CONTRACT_CD 
+			FROM T_CONTRACT tc , T_STAR_FIELD tsf , T_STAR_INFO tsi 
+			WHERE tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tsi.STAR_CD = #{star_cd}
+			AND tc.STATUS_INFO >= '3'
+			ORDER BY TO_NUMBER(tc.CONTRACT_CD) DESC
+		]]>
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!-- 모든 채팅 정보 출력 -->
+ 	<select id="selectAllChatContent" resultType="chatContentVO" parameterType="String">
+ 		<![CDATA[
+			SELECT *
+			FROM T_CHAT_CONTENT
+			WHERE CONTRACT_CD = #{contract_cd}
+			ORDER BY CHAT_SN
+		]]>
+ 	</select>
+ 	<!-- 채팅방 이름(분야), 스타로켓 프로필 출력 -->
+ 	<select id="selectChatRoomVO" resultType="chatRoomVO" parameterType="String">
+ 		<![CDATA[
+			SELECT tc2.* , tsf.STAR_FIELD_CD , tsf.PROFILE_IMG , tsi.STAR_CD , tsi.STAR_NICKNAME ,
+			       tri.ROCKET_CD , tri.PROFILE_IMG AS profile_img_r , tri.NAME , tc.STATUS_INFO , tc.HIDE_CHECK
+			FROM T_CONTRACT tc , T_STAR_FIELD tsf , T_STAR_INFO tsi , T_CATEGORY tc2 , T_ROCKET_INFO tri 
+			WHERE tc.STAR_FIELD_CD = tsf.STAR_FIELD_CD 
+			AND tc.ROCKET_CD = tri.ROCKET_CD 
+			AND tsf.STAR_CD = tsi.STAR_CD 
+			AND tsf.CATE_CD = tc2.CATE_CD
+			AND tc.CONTRACT_CD = #{contract_cd}
+		]]>
+ 	</select>
+ 	
+ 	
+ 	
+ 	<insert id="insertNewMessage" parameterType="chatContentVO">
+ 		<selectKey keyProperty="chat_content_cd" resultType="String" order="BEFORE">
+			SELECT NVL(MAX(to_number(chat_content_cd)), 0) + 1 FROM T_CHAT_CONTENT
+		</selectKey>
+ 		<![CDATA[
+			INSERT INTO DEVELOCKET.T_CHAT_CONTENT (CHAT_CONTENT_CD, CHAT_SN, SENDER_ID, MESSAGE, SEND_TIME, CONTRACT_CD)
+			VALUES(#{chat_content_cd}, #{chat_sn}, #{sender_id}, #{message}, SYSDATE , #{contract_cd})
+		]]>
+ 	</insert>
+ 	<!-- 채팅순번찾기 -->
+ 	<select id="selectMaxChatSN" resultType="String" parameterType="String">
+ 		<![CDATA[
+			SELECT NVL(MAX(to_number(CHAT_SN)), 0) + 1 
+			FROM T_CHAT_CONTENT 
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!-- 처음 보는 채팅이면 view_check를 '1'로 수정 -->
+ 	<update id="updateViewCheck" parameterType="java.util.Map">
+ 		<![CDATA[
+			UPDATE T_CONTRACT 
+			SET VIEW_CHECK = #{view_check}
+			WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+ 	</update>
+
+
+
+	<!-- 거래 종료 버튼 클릭시 status_info 를 '6'으로 수정 -->
+	<update id="updateContract6" parameterType="String">
+		<![CDATA[
+		UPDATE T_CONTRACT
+		SET STATUS_INFO = '6'
+		WHERE CONTRACT_CD = #{contract_cd}
+		]]>
+	</update>
+ 	
+ </mapper>

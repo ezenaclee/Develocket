@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- PropertyPlaceholderConfigurer 클래스 이용해 DB 설정 관련 정보를 jdbc.properties 파일에서 읽어옴 -->
+	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>/WEB-INF/config/jdbc.properties</value>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.ibatis.datasource.pooled.PooledDataSource" >
+		<property name="driver" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+
+	<!-- SqlSessionFactoryBean을 이용해 dataSource 속성에 dataSource 빈을 설정함 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/model/modelConfig.xml"/>
+		<property name="mapperLocations" value="classpath:mybatis/mappers/*.xml"/>
+	</bean>
+	
+	<!-- SqlSessionTemplate 이용해 sqlSession 빈을 생성함 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	  <constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+		
+</beans>

@@ -1,0 +1,263 @@
+/* starprofile */
+
+/* .profile_body {
+  width: 100%;
+  height: 10000px;
+  margin: 0;
+  position: relative;
+} */
+
+.profile-card {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    margin-top: 2rem;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.profile-card h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.profile-card h2 {
+    font-size: 1.2rem;
+}
+
+.profile-bio h2 {
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.profile-bio {
+    font-size: 1.2rem;
+}
+
+.profile-div {
+    min-height: 280px;
+    height: 28%;
+    width: 100%;
+    background-color: blueviolet;
+    position: fixed;
+    z-index: 1;
+}
+
+.modify {
+    float: right;
+    margin-right: 20px;
+}
+
+.content {
+    width: 100%;
+    z-index: 0;
+    /* padding-top: 6rem; */
+}
+
+.profile_body a {
+    position: relative;
+}
+
+.profile-card #profile-img {
+    position: relative;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    border: 15px solid transparent;
+}
+
+.star_img img {
+    height: 200px;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    border: 15px solid transparent;
+}
+
+.profile_body h1 {
+    margin: auto;
+}
+
+.profile_body h2 {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+.profile_body p {
+    margin: auto;
+    text-align: center;
+}
+
+.profile-links {
+    display: inline-flex;
+    position: relative;
+    text-align: center;
+    padding: 6px 0;
+    list-style: none;
+    margin-bottom: -1rem;
+}
+
+
+
+
+
+
+.profile_body li {
+    display: contents;
+    float: left;
+    padding-top: 1em;
+}
+
+#btn1,
+#btn2,
+#btn3,
+#btn4,
+#btn5 {
+    cursor: pointer;
+    margin-right: 2rem;
+    padding: 3px;
+    border-radius: 6px;
+}
+
+#btn1:hover,
+#btn2:hover,
+#btn3:hover,
+#btn4:hover,
+#btn5:hover,
+#btn6:hover {    
+    margin-right: 2rem;
+    padding: 3px;
+    color: #F34F30;
+    border: 1px solid #F34F30;
+    border-radius: 6px;
+}
+
+/* .profile-links > li:hover {
+	color: #F34F30;	
+} */
+
+
+/*
+#btn5 {
+  padding-left: 590px;
+  width: 100%;
+}
+*/
+
+#star_information h1,
+#star_picture h1,
+#star_question h1,
+#star_review h1 {
+    position: relative;
+    padding-top: 10px;
+    margin-left: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#star_information h2,
+#star_picture h2,
+#star_question h2,
+#star_review h2 {
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.inf_div,
+.question_div,
+.review_content1,
+.hr1,
+.review_content2,
+#reviewBtn{
+    text-align: left;
+    margin: 20px;
+}
+
+.review_content1 span{
+    font-weight: bold;
+    font-size: 40px;
+    color: #f55128;
+}
+
+.response_div {
+    opacity: 0.6;
+    padding-bottom: 20px;
+}
+
+#reviewBtn {
+    background-color: #f55128;
+    border-color: #f55128;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer
+}
+
+.review_content2 span {
+    font-weight: bold;
+    color: #f55128;
+}
+#star_information,
+#star_picture,
+#star_review,
+#star_question {
+    position: relative;
+    width: 100%;
+}
+
+#star_picture,
+#star_review,
+#star_question {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+}
+
+#star_review {
+    height: 700px;
+}
+
+.locket_chatreview {
+    background-color: #c7e8fb;
+    margin: 10px;
+    padding: 10px;
+}
+
+.star_chatreview {
+    background-color: rgb(255, 201, 102);
+    margin: 10px;
+    padding: 10px;
+}
+
+.locket_chatreview h3,
+.star_chatreview h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.locket_chatreview p,
+.star_chatreview p {
+    font-size: 1.1rem;
+}
+
+.profile_bar_fix {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 1110px;
+    z-index: 3;
+    height: 53px;
+}
+
+#profile-bar h2 {
+    margin: 0;
+}
+
+.pd_top {
+    padding-top: 53px;
+}
+
+
+

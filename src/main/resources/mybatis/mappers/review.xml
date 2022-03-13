@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="mapper.review">
+ 
+ 	<!-- 새 리뷰글 입력 -->
+ 	<insert id="insertNewReview" parameterType="reviewVO">
+ 		<selectKey keyProperty="review_cd" resultType="String" order="BEFORE">
+			SELECT NVL(MAX(to_number(REVIEW_CD)), 0) + 1 FROM T_REVIEW
+		</selectKey>
+  		<![CDATA[
+			INSERT INTO DEVELOCKET.T_REVIEW(REVIEW_CD, ROCKET_CD, RATING, REVIEW_CONTENT, REVIEW_DATE, STAR_FIELD_CD)
+			VALUES(#{review_cd}, #{rocket_cd}, #{rating}, #{review_content}, sysdate, #{star_field_cd})
+		]]>
+ 	</insert>
+ 	
+ </mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,86 @@
+    
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
+.receiveBody {
+    background-color: rgb(255, 255, 255);
+    font-family: "Poppins", sans-serif;
+    font-weight: 300
+}
+
+.receiveBody .height {
+    height: 100vh
+}
+
+.receiveBody .card {
+    width: 378px;
+    border: 1px solid #F34F30;
+}
+.receiveBody .card1 {
+    border-right: none;
+}
+.receiveBody .card2 {
+    border-left: none;
+    
+}
+.p-3s {
+    margin-top: 50px;
+}
+
+.receiveBody .form-control {
+    border: 2px solid #bdc1d2;
+    font-size: 13px;
+    height: 48px
+}
+
+.receiveBody .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #f7bfd9;
+    outline: 0;
+    box-shadow: none
+}
+
+.receiveBody .form {
+    position: relative;
+    margin-bottom: 25px
+}
+
+.receiveBody .form textarea {
+    height: 100px;
+    resize: none
+}
+
+.receiveBody .form a {
+    position: absolute;
+    right: 8px;
+    bottom: 10px;
+    color: #6ca0d6;
+    font-size: 13px;
+    text-decoration: none;
+    z-index: 10;
+    background-color: #fff;
+    padding: 5px
+}
+
+.receiveBody .fa-paperclip {
+    font-size: 19px
+}
+
+.receiveBody .quote {
+    font-size: 13px;
+    margin-top: 50px;
+}
+
+.receiveBody .send {
+    height: 46px;
+    font-size: 14px
+}
+
+img.profile-photo-lg{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    margin-left: 20px;
+    
+    float: left;
+  }

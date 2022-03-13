@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	
+	<!-- 공통 레이아웃의 뷰이름 --> 		   <!-- 전체 레이아웃을 정하는 jsp -->
+	<definition name="baseLayout" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="" />		<!-- 레이아웃에서 상단구성하는 JSP 위치 -->
+		<put-attribute name="header"  value="/WEB-INF/views/common/header.jsp"/>
+		<put-attribute name="body" value="" />	<!-- value를 비워두면 선택에 따라 값이 바뀜 -->
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+	</definition>
+	
+	<!-- 메인 화면의 뷰이름 --> <!-- 기본 레이아웃은 baseLayout을 상속받음 -->
+	<definition name="common/main" extends="baseLayout" >
+		<put-attribute name="title" value="Develocket에 오신걸 환영합니다!" />
+		<put-attribute name="body" value="/WEB-INF/views/common/main.jsp" />
+	</definition>
+	
+	<definition name="survey/survey" extends="baseLayout" >
+		<put-attribute name="title" value="설문조사설정" />
+		<put-attribute name="body" value="/WEB-INF/views/survey/survey.jsp" />
+	</definition>
+	
+	<definition name="starcategory/starcategory_IT" extends="baseLayout" >
+		<put-attribute name="title" value="중간분야설정" />
+		<put-attribute name="body" value="/WEB-INF/views/starcategory/starcategory_IT.jsp" />
+	</definition>
+	
+	<definition name="starcategory/starcategory_Health" extends="baseLayout" >
+		<put-attribute name="title" value="중간분야설정" />
+		<put-attribute name="body" value="/WEB-INF/views/starcategory/starcategory_Health.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="starcategory/starcategory_Study" extends="baseLayout" >
+		<put-attribute name="title" value="중간분야설정" />
+		<put-attribute name="body" value="/WEB-INF/views/starcategory/starcategory_Study.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="starcategory/starcategory_Lesson" extends="baseLayout" >
+		<put-attribute name="title" value="중간분야설정" />
+		<put-attribute name="body" value="/WEB-INF/views/starcategory/starcategory_Lesson.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="starcategory/starcategory_ETC" extends="baseLayout" >
+		<put-attribute name="title" value="중간분야설정" />
+		<put-attribute name="body" value="/WEB-INF/views/starcategory/starcategory_ETC.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="starcategory/starcategory_detail" extends="baseLayout" >
+		<put-attribute name="title" value="세부분야설정" />
+		<put-attribute name="body" value="/WEB-INF/views/starcategory/starcategory_detail.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+
+	<definition name="faq/faqList" extends="baseLayout" >
+		<put-attribute name="title" value="자주묻는질문" />
+		<put-attribute name="body" value="/WEB-INF/views/board/faq/faqList.jsp" />
+	</definition>
+
+	<definition name="faq/faqView1" extends="baseLayout" >
+		<put-attribute name="title" value="자주묻는질문" />
+		<put-attribute name="body" value="/WEB-INF/views/board/faq/faqView1.jsp" />
+	</definition>
+
+	<definition name="faq/faqView2" extends="baseLayout" >
+		<put-attribute name="title" value="자주묻는질문" />
+		<put-attribute name="body" value="/WEB-INF/views/board/faq/faqView2.jsp" />
+	</definition>
+
+	<definition name="faq/faqView3" extends="baseLayout" >
+		<put-attribute name="title" value="자주묻는질문" />
+		<put-attribute name="body" value="/WEB-INF/views/board/faq/faqView3.jsp" />
+	</definition>
+
+	<definition name="faq/faqView4" extends="baseLayout" >
+		<put-attribute name="title" value="자주묻는질문" />
+		<put-attribute name="body" value="/WEB-INF/views/board/faq/faqView4.jsp" />
+	</definition>
+
+	<definition name="faq/faqView5" extends="baseLayout" >
+		<put-attribute name="title" value="자주묻는질문" />
+		<put-attribute name="body" value="/WEB-INF/views/board/faq/faqView5.jsp" />
+	</definition>
+
+	<definition name="notice/noticeForm" extends="baseLayout" >
+		<put-attribute name="title" value="자주묻는질문" />
+		<put-attribute name="body" value="/WEB-INF/views/board/notice/noticeForm.jsp" />
+	</definition>
+
+	<definition name="notice/noticeList" extends="baseLayout" >
+		<put-attribute name="title" value="공지사항" />
+		<put-attribute name="body" value="/WEB-INF/views/board/notice/noticeList.jsp" />
+	</definition>
+
+	<definition name="notice/noticeView1" extends="baseLayout" >
+		<put-attribute name="title" value="공지사항" />
+		<put-attribute name="body" value="/WEB-INF/views/board/notice/noticeView1.jsp" />
+	</definition>
+
+	<definition name="notice/noticeView2" extends="baseLayout" >
+		<put-attribute name="title" value="공지사항" />
+		<put-attribute name="body" value="/WEB-INF/views/board/notice/noticeView2.jsp" />
+	</definition>
+
+	<definition name="notice/noticeView3" extends="baseLayout" >
+		<put-attribute name="title" value="공지사항" />
+		<put-attribute name="body" value="/WEB-INF/views/board/notice/noticeView3.jsp" />
+	</definition>
+
+	<definition name="notice/noticeView4" extends="baseLayout" >
+		<put-attribute name="title" value="공지사항" />
+		<put-attribute name="body" value="/WEB-INF/views/board/notice/noticeView4.jsp" />
+	</definition>
+
+	<definition name="board/useGuide" extends="baseLayout" >
+		<put-attribute name="title" value="이용안내" />
+		<put-attribute name="body" value="/WEB-INF/views/board/useGuide.jsp" />
+	</definition>
+
+	<definition name="board/intro" extends="baseLayout" >
+		<put-attribute name="title" value="회사소개" />
+		<put-attribute name="body" value="/WEB-INF/views/board/intro.jsp" />
+	</definition>
+
+</tiles-definitions>

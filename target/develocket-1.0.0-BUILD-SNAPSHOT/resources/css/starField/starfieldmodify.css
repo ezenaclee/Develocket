@@ -1,0 +1,284 @@
+/* starprofile */
+
+/* .profile_body {
+  width: 100%;
+  height: 10000px;
+  margin: 0;
+  position: relative;
+} */
+
+.profile-card {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    margin-top: 2rem;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.profile-card h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.profile-card h2 {
+    font-size: 1.2rem;
+}
+.profile-bio h2 {
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.profile-bio {
+    font-size: 1.2rem;
+}
+
+.profile-div {
+    min-height: 280px;
+    height: 28%;
+    width: 100%;
+    background-color: blueviolet;
+    position: fixed;
+    z-index: 1;
+}
+
+.modify {
+    float: right;
+    margin-right: 20px;
+}
+
+.content {
+    width: 100%;
+    z-index: 0;
+    /* padding-top: 6rem; */
+}
+
+.profile_body a {
+    position: relative;
+}
+
+#profile-star-img{
+    position: relative;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    border: 15px solid transparent;
+}
+
+.star_img img {
+    height: 200px;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    border: 15px solid transparent;
+}
+
+.profile_body h1 {
+    margin: auto;
+}
+
+.profile_body h2 {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+.profile_body p {
+    margin: auto;
+    text-align: center;
+}
+
+.profile-links {
+    display: inline-flex;
+    position: relative;
+    text-align: center;
+    padding: 6px 0;
+    list-style: none;
+    margin-bottom: -1rem;
+}
+
+.profile_body li {
+    display: contents;
+    float: left;
+    padding-top: 1em;
+}
+
+#btn1,
+#btn2,
+#btn3,
+#btn4{
+    cursor: pointer;
+    padding-right: 2rem;
+}
+
+/*
+#btn5 {
+  padding-left: 590px;
+  width: 100%;
+}
+*/
+
+#star_information h1,
+#star_picture h1,
+#star_question h1,
+#star_review h1 {
+    position: relative;
+    padding-top: 10px;
+    margin-left: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#star_information h2,
+#star_picture h2,
+#star_question h2,
+#star_review h2 {
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.inf_div,
+.question_div {
+    text-align: left;
+    margin: 20px;
+}
+
+.response_div {
+    opacity: 0.6;
+}
+
+#star_information,
+#star_picture,
+#star_review,
+#star_question {
+    position: relative;
+    width: 100%;
+}
+
+#star_picture,
+#star_review,
+#star_question {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+}
+
+#star_question {
+    height: 700px;
+}
+
+.locket_chatreview {
+    background-color: #c7e8fb;
+    margin: 10px;
+    padding: 10px;
+}
+
+.star_chatreview {
+    background-color: rgb(255, 201, 102);
+    margin: 10px;
+    padding: 10px;
+}
+
+.locket_chatreview h3,
+.star_chatreview h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.locket_chatreview p,
+.star_chatreview p {
+    font-size: 1.1rem;
+}
+
+.profile_bar_fix {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 1110px;
+    z-index: 3;
+    height: 53px;
+}
+
+#profile-bar h2 {
+    margin: 0;
+}
+.pd_top {
+    padding-top: 53px;
+}
+
+textarea {
+    resize: none;
+}
+
+.tr_modEnable {
+    display: inline-flex;
+}
+
+#tb_addImage,
+#exist_business,
+#modify_img
+{
+    display: block;
+    padding-top: 10px;
+    margin-left: 20px;
+}
+
+#inner_image{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#file_image{
+   margin-left: 10px;
+}
+
+#div_profile_mod {
+    margin-bottom: 20px;
+    position: absolute;
+    margin-left: 210px;
+    top: 9.5rem;
+}
+
+#div_business_mod {
+    position: relative;
+    margin-left: 230px;
+    top: -3rem;
+}
+
+#business_btn,
+#profile_delete_btn,
+#img_delete_btn {
+    background-color: #f55128;
+    border-color: #f55128;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer
+}
+
+#img_remove{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.label_btn {
+    background-color: #f55128;
+    border-color: #f55128;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+}
+
+.img_remove {
+    background-color: #f55128;
+    border-color: #f55128;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+

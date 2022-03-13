@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com" />	<!-- 메일 보내는 서버의 SMTP 설정 -->
+		<property name="port" value="465" />	<!-- 구글 SMTP 메일 서버 포트 456 or 587 -->
+		<property name="username" value="develocket@naver.com" />
+		<property name="password" value="develocket2022" />
+		<property name="javaMailProperties" >
+			<props>		<!-- 메일 전달 프로토콜 세부 속성 설정함 -->
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtps.checkserveridentity"></prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				
+			</props>
+		</property>
+	</bean>
+
+
+</beans>
+

@@ -1,0 +1,52 @@
+button {
+    background-color: #f55128;
+    border-color: #f55128;
+    width: 9.2rem;
+    height: 50px;
+    margin-bottom: 50px;
+}
+
+#second_button button {
+    background-color: #f55128;
+    border-color: #f55128;
+    margin-right: 10px;
+}
+
+#third_button button {
+    background-color: #f55128;
+    border-color: #f55128;
+    margin-right: 10px;
+}
+
+#four {
+    margin-bottom: 50px;
+}
+
+#star_nickname,
+#star_home {
+    margin-bottom: 50px;
+}
+
+#nickname_check,
+#cancel_btn,
+#submit_btn,
+#star_address_btn,
+#star_submit_btn {
+    background-color: #f55128;
+    border-color: #f55128;
+}
+
+#nickname_check,
+#cancel_btn,
+#star_address_btn,
+#star_submit_btn {
+    width: auto;
+    height: auto;
+    margin: -5px 0px 0px 0px;
+}
+
+#nickname,
+#sample5_address,
+#input_star_cd{
+    margin-right: 10px;
+}

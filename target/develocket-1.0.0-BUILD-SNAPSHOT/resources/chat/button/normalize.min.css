@@ -1,0 +1,189 @@
+.buttons1 .buttons2 button,
+.buttons1 .buttons2 hr,
+.buttons1 .buttons2 input {
+  overflow: visible;
+}
+.buttons1 .buttons2 audio,
+.buttons1 .buttons2 canvas,
+.buttons1 .buttons2 progress,
+.buttons1 .buttons2 video {
+  display: inline-block;
+}
+.buttons1 .buttons2 progress,
+.buttons1 .buttons2 sub,
+.buttons1 .buttons2 sup {
+  vertical-align: baseline;
+}
+.buttons1 .buttons2  {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+.buttons1 .buttons2  {
+  margin: 0;
+}
+.buttons1 .buttons2 menu,
+.buttons1 .buttons2 article,
+.buttons1 .buttons2 aside,
+.buttons1 .buttons2 details,
+.buttons1 .buttons2 footer,
+.buttons1 .buttons2 header,
+.buttons1 .buttons2 nav,
+.buttons1 .buttons2 section {
+  display: block;
+}
+.buttons1 .buttons2 h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.buttons1 .buttons2 figcaption,
+.buttons1 .buttons2 figure,
+.buttons1 .buttons2 main {
+  display: block;
+}
+.buttons1 .buttons2 figure {
+  margin: 1em 40px;
+}
+.buttons1 .buttons2 hr {
+  box-sizing: content-box;
+  height: 0;
+}
+.buttons1 .buttons2 code,
+.buttons1 .buttons2 kbd,
+.buttons1 .buttons2 pre,
+.buttons1 .buttons2 samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.buttons1 .buttons2 a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+.buttons1 .buttons2 a:active,
+.buttons1 .buttons2 a:hover {
+  outline-width: 0;
+}
+.buttons1 .buttons2 abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}
+.buttons1 .buttons2 b,
+.buttons1 .buttons2 strong {
+  font-weight: bolder;
+}
+.buttons1 .buttons2 dfn {
+  font-style: italic;
+}
+.buttons1 .buttons2 mark {
+  background-color: #ff0;
+  color: #000;
+}
+.buttons1 .buttons2 small {
+  font-size: 80%;
+}
+.buttons1 .buttons2 sub,
+.buttons1 .buttons2 sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+}
+.buttons1 .buttons2 sub {
+  bottom: -0.25em;
+}
+.buttons1 .buttons2 sup {
+  top: -0.5em;
+}
+.buttons1 .buttons2 audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+.buttons1 .buttons2 img {
+  border-style: none;
+}
+.buttons1 .buttons2 svg:not(:root) {
+  overflow: hidden;
+}
+.buttons1 .buttons2 button,
+.buttons1 .buttons2 input,
+.buttons1 .buttons2 optgroup,
+.buttons1 .buttons2 select,
+.buttons1 .buttons2 textarea {
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+.buttons1 .buttons2 button,
+.buttons1 .buttons2 input {
+}
+.buttons1 .buttons2 button,
+.buttons1 .buttons2 select {
+  text-transform: none;
+}
+.buttons1 .buttons2 [type="submit"],
+.buttons1 .buttons2 [type="reset"],
+.buttons1 .buttons2 button,
+.buttons1 .buttons2 html [type="button"] {
+  -webkit-appearance: button;
+}
+.buttons1 .buttons2 [type="button"]::-moz-focus-inner,
+.buttons1 .buttons2 [type="reset"]::-moz-focus-inner,
+.buttons1 .buttons2 [type="submit"]::-moz-focus-inner,
+.buttons1 .buttons2 button::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+.buttons1 .buttons2 [type="button"]:-moz-focusring,
+.buttons1 .buttons2 [type="reset"]:-moz-focusring,
+.buttons1 .buttons2 [type="submit"]:-moz-focusring,
+.buttons1 .buttons2 button:-moz-focusring {
+  outline: ButtonText dotted 1px;
+}
+.buttons1 .buttons2 fieldset {
+  border: 1px solid silver;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+.buttons1 .buttons2 legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+.buttons1 .buttons2 progress {
+}
+.buttons1 .buttons2 textarea {
+  overflow: auto;
+}
+.buttons1 .buttons2 [type="checkbox"],
+.buttons1 .buttons2 [type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.buttons1 .buttons2 [type="number"]::-webkit-inner-spin-button,
+.buttons1 .buttons2 [type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+.buttons1 .buttons2 [type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+.buttons1 .buttons2 [type="search"]::-webkit-search-cancel-button,
+.buttons1 .buttons2 [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+.buttons1 .buttons2 summary {
+  display: list-item;
+}
+.buttons1 .buttons2 [hidden],
+.buttons1 .buttons2 template {
+  display: none;
+} /*# sourceMappingURL=normalize.min.css.map */

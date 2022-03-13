@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	
+			<!-- 메인 화면의 뷰이름 --> <!-- 기본 레이아웃은 baseLayout을 상속받음 -->
+	<definition name="/inquiry/inquiryList" extends="baseLayout" >
+		<put-attribute name="title" value="1:1문의" />
+		<put-attribute name="body" value="/WEB-INF/views/inquiry/inquiryList.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="/inquiry/inquiryForm" extends="baseLayout" >
+		<put-attribute name="title" value="새문의글 작성" />
+		<put-attribute name="body" value="/WEB-INF/views/inquiry/inquiryForm.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="/inquiry/inquiryVeiw" extends="baseLayout" >
+		<put-attribute name="title" value="문의글 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/inquiry/inquiryVeiw.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+	<definition name="/inquiry/inquiryReplyForm" extends="baseLayout" >
+		<put-attribute name="title" value="답글쓰기" />
+		<put-attribute name="body" value="/WEB-INF/views/inquiry/inquiryReplyForm.jsp" />	<!-- 레이아웃에서 본문표시할 JSP 위치 -->
+	</definition>
+	
+</tiles-definitions>
