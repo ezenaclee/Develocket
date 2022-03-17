@@ -20,7 +20,7 @@
 
     Reader reader = null;
     try {
-        reader = new FileReader("C:\\develocket\\Develocket_T\\src\\main\\webapp\\resources\\json\\field.json");
+        reader = new FileReader("C:\\develocket\\Develocket\\src\\main\\webapp\\resources\\json\\field.json");
 
     } catch (FileNotFoundException e) {
         // TODO Auto-generated catch block

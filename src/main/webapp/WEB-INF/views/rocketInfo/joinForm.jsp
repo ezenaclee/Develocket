@@ -65,7 +65,7 @@
 			else{
 				$.ajax({
 					type:'post',
-					url:"http://localhost:8080/develocket/rocketInfo/checkid.do",
+					url:"http://221.148.239.155:8080/develocket/rocketInfo/checkid.do",
 					dataType: "text",
 					data:{id:rocket_id},
 					success:function(count){
@@ -153,7 +153,7 @@
 			var email = $("#email").val();
 
 			$.ajax({
-				//http://localhost:8080/develocket/inquiry/removeModImage.do
+				//http://221.148.239.155:8080/develocket/inquiry/removeModImage.do
 				url:"${contextPath}/rocketInfo/checkemail.do",
 				type:'post',
 				data:{email:email},
@@ -162,7 +162,7 @@
 						$.ajax({
 							type:"post",
 							async: false,
-							url:"http://localhost:8080/develocket/email/mailCheck?email=" + email,
+							url:"http://221.148.239.155:8080/develocket/email/mailCheck?email=" + email,
 							cache : false,
 							success:function(data){
 								if(data == "error"){
@@ -229,8 +229,8 @@
 			}
 			else {
 				$.ajax({
-					//http://localhost:8080/develocket/inquiry/removeModImage.do
-					url:"http://localhost:8080/develocket/rocketInfo/checkphone.do",
+					//http://221.148.239.155:8080/develocket/inquiry/removeModImage.do
+					url:"http://221.148.239.155:8080/develocket/rocketInfo/checkphone.do",
 					type:'post',
 					data:{phone_number:phone},
 					success:function(count){

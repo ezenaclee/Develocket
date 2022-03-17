@@ -78,7 +78,7 @@
 				$.ajax({
 					type:"post",
 					async: false,
-					url:"http://localhost:8080/develocket/mypage/checkNickname.do",
+					url:"http://221.148.239.155:8080/develocket/mypage/checkNickname.do",
 					dataType: "text",
 					data: {nickname: nickname, star_cd: star_cd},
 					success:function(result){
@@ -110,7 +110,7 @@
             $.ajax({ 
                type:"post", 
                async: false,
-               url:"http://localhost:8080/develocket/mypage/areaModify.do", 
+               url:"http://221.148.239.155:8080/develocket/mypage/areaModify.do", 
                dataType: "text",
                data: {area: area, star_cd: star_cd}, 
                success:function(result){ 
@@ -150,7 +150,7 @@
 					$.ajax({
 						type:"post",
 						async: false,
-						url:"http://localhost:8080/develocket/mypage/checkPwd.do",
+						url:"http://221.148.239.155:8080/develocket/mypage/checkPwd.do",
 						dataType: "text",
 						data: {star_cd: star_cd, password: password},
 						success:function(result){
@@ -160,13 +160,13 @@
 								$.ajax({
 									type:"post",
 									async: false,
-									url:"http://localhost:8080/develocket/mypage/deleteStar.do",
+									url:"http://221.148.239.155:8080/develocket/mypage/deleteStar.do",
 									dataType: "text",
 									data: {star_cd: star_cd},
 									success:function(result){
 										if(result == "success"){
 											alert("스타 탈퇴가 완료되었습니다.");
-											location.href="http://localhost:8080/develocket/";
+											location.href="http://221.148.239.155:8080/develocket/";
 										} else {
 											alert("스타 탈퇴에 실패했습니다.");
 										}

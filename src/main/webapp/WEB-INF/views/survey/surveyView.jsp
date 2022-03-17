@@ -14,7 +14,7 @@
 	JSONParser parser = new JSONParser();
 	Reader reader = null;
 	try {
-		reader = new FileReader("C:\\develocket\\Develocket_T\\src\\main\\webapp\\resources\\json\\survey.json");
+		reader = new FileReader("C:\\develocket\\Develocket\\src\\main\\webapp\\resources\\json\\survey.json");
 	} catch (FileNotFoundException e) {
 		e.printStackTrace();
 	}

@@ -18,7 +18,7 @@
 
 	Reader reader = null;
 	try {
-		reader = new FileReader("C:\\develocket\\Develocket_T\\src\\main\\webapp\\resources\\json\\field.json");
+		reader = new FileReader("C:\\develocket\\Develocket\\src\\main\\webapp\\resources\\json\\field.json");
 
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
@@ -264,7 +264,7 @@
 			}
 
 			$.ajax({
-				url:"http://localhost:8080/develocket/starInfo/duplicateCheck.do",
+				url:"http://221.148.239.155:8080/develocket/starInfo/duplicateCheck.do",
 				type:'post',
 				dataType: "text",
 				data:{star_nickname: _star_nickname},

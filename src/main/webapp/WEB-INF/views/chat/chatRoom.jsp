@@ -79,7 +79,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/chat/saveChattingMessage.do",
+				url: "http://221.148.239.155:8080/develocket/chat/saveChattingMessage.do",
 				dataType: "text",
 				data: {contract_cd: _contract_cd, user_cd: _user_cd, message: chatMessage.value},
 				success: function(result, textStatus) {
@@ -151,7 +151,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/chat/requestReview.do",
+				url: "http://221.148.239.155:8080/develocket/chat/requestReview.do",
 				dataType: "text",
 				data: {contract_cd: _contract_cd, message: _message},
 				success: function(result, textStatus) {

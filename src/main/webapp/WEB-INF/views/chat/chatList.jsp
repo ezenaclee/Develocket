@@ -71,7 +71,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/request/makeInvisibleEnd.do",
+				url: "http://221.148.239.155:8080/develocket/request/makeInvisibleEnd.do",
 				dataType: "text",
 				data: {contract_cd: _contract_cd, hide_check: _hide_check},
 				success: function(result, textStatus) {
@@ -92,7 +92,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/chat/readAll.do",
+				url: "http://221.148.239.155:8080/develocket/chat/readAll.do",
 				dataType: "text",
 				data: {isStar: _isStar},
 				success: function(result, textStatus) {

@@ -133,7 +133,7 @@
 			$.ajax({
 				type    : "post",
 				async   : false,
-				url     : "http://localhost:8080/develocket/starField/removeModImage.do",
+				url     : "http://221.148.239.155:8080/develocket/starField/removeModImage.do",
 				dataType: "text",
 				data    : {career_img_cd: _career_img_cd, star_field_cd: _star_field_cd, imageFileName: _imageFileName},
 				success : function (result, textStatus) {
@@ -169,7 +169,7 @@
 			$.ajax({
 				type    : "post",
 				async   : false,
-				url     : "http://localhost:8080/develocket/starField/removeExistImage.do",
+				url     : "http://221.148.239.155:8080/develocket/starField/removeExistImage.do",
 				dataType: "text",
 				data    : {star_field_cd: _star_field_cd, image: _image, item: _item},
 				success : function (result, textStatus) {
@@ -239,13 +239,13 @@
 				$.ajax({
 					type    : "post",
 					async   : false,
-					url     : "http://localhost:8080/develocket/starField/deleteProfile.do",
+					url     : "http://221.148.239.155:8080/develocket/starField/deleteProfile.do",
 					dataType: "text",
 					data    : {star_field_cd: star_field_cd},
 					success : function (result) {
 						if (result == 'success') {
 							alert("스타 프로필이 삭제되었습니다.");
-							location.href = "http://localhost:8080/develocket/";
+							location.href = "http://221.148.239.155:8080/develocket/";
 
 						} else {
 							alert("다시 시도해주세요.");

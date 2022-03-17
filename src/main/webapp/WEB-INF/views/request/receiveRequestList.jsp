@@ -48,7 +48,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/request/makeInvisibleRefuse.do",
+				url: "http://221.148.239.155:8080/develocket/request/makeInvisibleRefuse.do",
 				dataType: "text",
 				data: {contract_cd: _contract_cd, status_info: "-2"},
 				success: function(result, textStatus) {
@@ -69,7 +69,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/request/makeInvisibleEnd.do",
+				url: "http://221.148.239.155:8080/develocket/request/makeInvisibleEnd.do",
 				dataType: "text",
 				data: {contract_cd: _contract_cd, hide_check: "b"},
 				success: function(result, textStatus) {
@@ -93,7 +93,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/request/readAll.do",
+				url: "http://221.148.239.155:8080/develocket/request/readAll.do",
 				dataType: "text",
 				data: {star_cd: _star_cd},
 				success: function(result, textStatus) {

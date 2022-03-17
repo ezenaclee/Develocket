@@ -143,7 +143,7 @@
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "http://localhost:8080/develocket/mypage/removeExistImage.do",
+				url: "http://221.148.239.155:8080/develocket/mypage/removeExistImage.do",
 				dataType: "text",
 				data: {rocket_cd: _rocket_cd, profile_img: _profile_img},
 				success: function(result, textStatus) {

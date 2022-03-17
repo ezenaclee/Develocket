@@ -12,7 +12,7 @@
 	<!-- 웹소캣 채팅 설정 -->
     <context-param>
   		<param-name>CHATSERVER_ADDR</param-name>
-  		<param-value>ws://localhost:8080/develocket</param-value>
+  		<param-value>ws://221.148.239.155:8080/develocket</param-value>
     </context-param>
     
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->

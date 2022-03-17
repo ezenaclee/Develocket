@@ -24,7 +24,7 @@
 			$.ajax({
 				type:"post",
 				async: false,
-				url:"http://localhost:8080/develocket/rocketInfo/searchID.do",
+				url:"http://221.148.239.155:8080/develocket/rocketInfo/searchID.do",
 				dataType: "text",
 				data: {email: email},
 				success:function(result){
@@ -33,7 +33,7 @@
 
 					} else {
 						alert("아이디가 이메일로 전송되었습니다.");
-						location.href="http://localhost:8080/develocket/email/send_id";
+						location.href="http://221.148.239.155:8080/develocket/email/send_id";
 					}
 				},
 				error: function(data, textStatus) {
@@ -54,7 +54,7 @@
 			$.ajax({
 				type:"post",
 				async: false,
-				url:"http://localhost:8080/develocket/rocketInfo/updatePassword.do",
+				url:"http://221.148.239.155:8080/develocket/rocketInfo/updatePassword.do",
 				data: {"email" : email, "id" : id},
 				dataType: "text",
 				success:function(result) {
@@ -63,7 +63,7 @@
 
 					} else {
 						alert("임시 비밀번호가 이메일로 전송되었습니다.");
-						location.href="http://localhost:8080/develocket/email/send_pwd";
+						location.href="http://221.148.239.155:8080/develocket/email/send_pwd";
 					}
 				},
 				error: function(data, textStatus) {
